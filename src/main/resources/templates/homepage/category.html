@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:unless="${smallcategory!=null}" th:text="${bigcategory.value}"></title>
+<title th:if="${smallcategory!=null}" th:text="${smallcategory.value}"></title>
+<meta data-vmid="description" name="description" content="Dico的个人博客" />
+<meta data-vmid="keywords" name="keywords"
+	content="Dico的个人博客，博客，Dico，java，个人博客" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"
+	th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="../../css/font-awesome.min.css"
+	th:href="@{/css/font-awesome.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="../../css/atelier-plateau-dark.css"
+	th:href="@{/css/atelier-plateau-dark.css}">
+<link rel="stylesheet" type="text/css"
+	href="../../css/bootstrap-grid.min.css"
+	th:href="@{/css/bootstrap-grid.min.css}">
+<link rel="apple-touch-icon-precomposed"
+	href="../../images/headlogo.png" th:href="@{/images/headlogo.png}">
+<link rel="shortcut icon" href="../../images/headlogo.png"
+	th:href="@{/images/headlogo.png}">
+<script type="text/javascript" src="../../js/jquery.min.js"
+	th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" src="../../js/highlight.pack.js"
+	th:src="@{/js/highlight.pack.js}"></script>
+<script type="text/javascript" src="../../js/jquery.lazyload.min.js"
+	th:src="@{/js/jquery.lazyload.min.js}"></script>
+<script type="text/javascript"
+	src="../../js/jquery.mousewheel-3.0.6.pack.js"
+	th:src="@{/js/jquery.mousewheel-3.0.6.pack.js}"></script>
+<!--[if gte IE 9]>
+
+<![endif]-->
+<!--[if lt IE 9]>
+<![endif]-->
+</head>
+<script type="text/javascript">
+	/*var a_idx = 0;
+	 jQuery(document).ready(function($) {
+	 $("body").click(function(e) {
+	 var a = new Array("🙄","😛","😜","😝");
+	 var $i = $("<span />").text(a[a_idx]);
+	 a_idx = (a_idx + 1) % a.length;
+	 var x = e.pageX,
+	 y = e.pageY;
+	 $i.css({
+	 "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+	 "top": y - 20,
+	 "left": x,
+	 "position": "absolute",
+	 "font-weight": "bold",
+	 "color": "#ff6651"
+	 });
+	 $("body").append($i);
+	 $i.animate({
+	 "top": y - 180,
+	 "opacity": 0
+	 },
+	 1500,
+	 function() {
+	 $i.remove();
+	 });
+	 });
+	 });*/
+	(function() {
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		} else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+</script>
+<body>
+	<header class="header">
+		<div class="head">
+			<div class="head-section box">
+				<div class="head-logo">
+					<h1 class="logo">
+						<a href="../" title="Dico'blog" draggable="false"> <img
+							src="../images/logo.png" alt draggable="false">
+						</a>
+					</h1>
+				</div>
+				<span class="logo-mobile"> Dico </span>
+				<div class="search input-group">
+					<form action="../search" class="search-form" method="GET">
+						<input type="text" name="title" class="search-input"
+							id="search-input" data-toggle="dropdown" autocomplete="off"
+							placeholder="搜索">
+						<button type="submit" class="search-btn"></button>
+					</form>
+					<ul id="search-down" class="dropdown-menu dropdown-width"
+						role="menu" aria-labelledby="dropdownMenu1">
+					</ul>
+				</div>
+				<span class="right"></span>
+			</div>
+			<div class="head-nav box">
+				<div class="head-nav-left">
+					<!-- 分类导航 等级2加一 -->
+					<ul>
+						<li class="mainlevel"><a href="../" class="top_a">首页</a></li>
+						<li class="mainlevel somes" th:if="${bcList}?exists"
+							th:each="bcList:${bcList}"><a th:if="${bcid eq bcList.id}"
+							style="color: blue;" th:href="@{'../category/'+${bcList.id}}"
+							class="top_a" th:text="${bcList.value}"></a><a
+							th:unless="${bcid eq bcList.id}"
+							th:href="@{'../category/'+${bcList.id}}" class="top_a"
+							th:text="${bcList.value}"></a>
+							<ul>
+								<li th:if="${scList}?exists" th:each="scList:${scList}"><a
+									th:if="${bcList.id eq scList.bcid}"
+									th:href="@{'../category/'+${scList.bcid}(scid=${scList.id})}"
+									th:text="${scList.value}"></a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+			<div class="head-nav-fitter"></div>
+			<div class="head-nav-fitter-bg"></div>
+		</div>
+	</header>
+	<!-- 分级导航的数据源可以做 1级 -->
+	<div class="menu">
+		<li><a href="../">首页</a></li>
+		<li th:if="${bcList}?exists" th:each="bcList:${bcList}"><a
+			th:href="@{'../category/'+${bcList.id}}" class="top_a"
+			th:text="${bcList.value}"></a></li>
+	</div>
+	<!--<div class="blank-interval"></div>-->
+	<section class="section box">
+		<div class="section-body">
+			<div class="section-body-left">
+				<div class="section-left-title">
+					<h3>
+						<span th:unless="${bigcategory!=null}">搜索结果</span><a
+							th:if="${bigcategory!=null}" href="../"
+							style="color: black; text-decoration: none;">首页</a><span
+							th:if="${bigcategory!=null}" style="color: back; font-size: 6px;">
+							>> </span><a th:href="@{'../category/'+${bigcategory.id}}"
+							th:if="${bigcategory!=null}" th:text="${bigcategory.value}"
+							style="text-decoration: none; font-size: 16px;"></a><span
+							th:if="${smallcategory!=null}"
+							style="color: back; font-size: 6px;"> >> </span><a
+							th:href="@{'../category/'+${bigcategory.id}(scid=${smallcategory.id})}"
+							th:if="${smallcategory!=null}" th:text="${smallcategory.value}"
+							style="text-decoration: none; font-size: 16px;"></a>
+					</h3>
+				</div>
+				<article class="excerpt border-t4" th:if="${aList}?exists"
+					th:each="aList:${aList}">
+					<a class="image-focus" th:href="@{'../article/'+${aList.id}}" title
+						draggable="false"><img class="image-thumb" data-original=""
+						th:src="${aList.imgurl}" alt draggable="false"
+						style="display: inline;"></a>
+					<header>
+						<a class="title-in"
+							th:href="@{'../category/'+${aList.bigcategory.id}(scid=${aList.smallcategory.id})}"
+							draggable="false"><span
+							th:text="${aList.smallcategory.value}"></span><i></i></a>
+						<h2>
+							<a th:href="@{'../article/'+${aList.id}}"
+								th:title="${aList.title}" draggable="false"
+								th:text="${aList.title}"></a>
+						</h2>
+					</header>
+					<p class="meta">
+						<time class="time">
+							<i class="glyphicon glyphicon-time"></i><i
+								th:text="${#dates.format(aList.createtime,'yyyy-MM-dd HH:mm:ss')}"></i>
+						</time>
+						<span class="time"><i class="glyphicon glyphicon-list"></i>
+							<i th:if="${smallcategory!=null}"
+							th:text="${aList.smallcategory.value}"></i><i
+							th:unless="${smallcategory!=null}"
+							th:text="${aList.bigcategory.value}"></i></span> <span class="time"><i
+							class="glyphicon glyphicon-user"></i><i
+							th:text="${aList.createman}"></i></span> <span class="views"><i
+							class="glyphicon glyphicon-eye-open"></i> <i
+							th:text="${aList.articleScale.articlepv}"></i></span> <a class="comment"
+							draggable="false"><i class="glyphicon glyphicon-comment"></i>
+							<i th:text="${aList.articleScale.commentnum}"></i></a> <span
+							class="item article-meta-goods"><i
+							class="glyphicon glyphicon-thumbs-up"></i> <i
+							th:text="${aList.articleScale.articlepraise}"></i></span>
+					</p>
+					<p class="note" th:text="${aList.describe}"></p>
+				</article>
+				<nav class="pagination" style="display: none;">
+					<ul>
+						<li class="prev-page"></li>
+						<li class="next-page" th:if="${nextPage}?exists"><a
+							th:href="@{'../bpage/'+${nextPage}}" draggable="false">下一页</a></li>
+						<li>共<span th:text="${pageNum}"></span>页
+						</li>
+					</ul>
+				</nav>
+				<div class="nothing" th:if="${aListNull}?exists">
+					<div class="nothing_img"></div>
+				</div>
+			</div>
+		</div>
+		<aside class="section-body-right">
+			<div class="widget widget_sentence">
+				<h3>公告</h3>
+				<div class="widget-sentence-content">
+					<h4 th:text="${time}"></h4>
+					<br>
+					<p th:utext="${announce.value}"></p>
+				</div>
+			</div>
+			<div class="widget widget_hot">
+				<h3>热门文章</h3>
+				<ul class="widget-aside">
+					<li id="widget-aside-left" class="widget-aside-li on" title="点赞数"><span
+						class="glyphicon glyphicon-thumbs-up"></span></li>
+					<li id="widget-aside-center" class="widget-aside-li" title="访问数"><span
+						class="glyphicon glyphicon-eye-open"></span></li>
+					<li id="widget-aside-right" class="widget-aside-li" title="评论数"><span
+						class="glyphicon glyphicon-comment"></span></li>
+				</ul>
+				<ul class="widget-content-1">
+					<li class="widget-content" th:each="aprList:${aprList}"><a
+						th:href="@{'../article/'+${aprList.id}}" draggable="false"> <span
+							class="thumbnail"> <img class="thumb" data-original=""
+								th:src="${aprList.imgurl}" alt="" draggable="false"
+								style="display: block;">
+						</span> <span class="text" th:text="${aprList.title}"></span> <span
+							class="muted"><i class="glyphicon glyphicon-time"></i><span
+								th:text="${#dates.format(aprList.createtime,'yyyy-MM-dd HH:mm:ss')}"></span></span><br />
+							<span class="muted"><i
+								class="glyphicon glyphicon-thumbs-up"></i><span
+								th:text="${aprList.articleScale.articlepraise}"></span></span><span
+							class="muted"><i class="glyphicon glyphicon-user"></i><span
+								th:text="${aprList.createman}"></span></span>
+					</a></li>
+				</ul>
+				<ul class="widget-content-2" style="display: none;">
+					<li class="widget-content" th:each="apList:${apList}"><a
+						th:href="@{'../article/'+${apList.id}}" draggable="false"> <span
+							class="thumbnail"> <img class="thumb" data-original=""
+								th:src="${apList.imgurl}" alt="" draggable="false"
+								style="display: block;">
+						</span> <span class="text" th:text="${apList.title}"></span> <span
+							class="muted"><i class="glyphicon glyphicon-time"></i><span
+								th:text="${#dates.format(apList.createtime,'yyyy-MM-dd HH:mm:ss')}"></span></span><br />
+							<span class="muted"><i
+								class="glyphicon glyphicon-eye-open"></i><span
+								th:text="${apList.articleScale.articlepv}"></span></span><span
+							class="muted"><i class="glyphicon glyphicon-user"></i><span
+								th:text="${apList.createman}"></span></span>
+					</a></li>
+				</ul>
+				<ul class="widget-content-3" style="display: none;">
+					<li class="widget-content" th:each="cnList:${cnList}"><a
+						th:href="@{'../article/'+${cnList.id}}" draggable="false"> <span
+							class="thumbnail"> <img class="thumb" data-original=""
+								th:src="${cnList.imgurl}" alt="" draggable="false"
+								style="display: block;">
+						</span> <span class="text" th:text="${cnList.title}"></span> <span
+							class="muted"><i class="glyphicon glyphicon-time"></i><span
+								th:text="${#dates.format(cnList.createtime,'yyyy-MM-dd HH:mm:ss')}"></span></span><br />
+							<span class="muted"><i class="glyphicon glyphicon-comment"></i><span
+								th:text="${cnList.articleScale.commentnum}"></span></span><span
+							class="muted"><i class="glyphicon glyphicon-user"></i><span
+								th:text="${cnList.createman}"></span></span>
+					</a></li>
+				</ul>
+			</div>
+		</aside>
+	</section>
+	<div class="fed-goto-info clearfix">
+		<a
+			class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-share"
+			href="javascript:;"></a> <a
+			class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-expand"
+			href="javascript:;"></a> <a
+			class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-top"
+			href="javascript:;" title="返回顶部" style="display: none;"><span
+			class="glyphicon glyphicon-chevron-up"></span></a>
+	</div>
+	<footer class="footer">
+		<div class="footer-nav">
+			本站仅限于分享交流有用的技术与经验，禁止发布任何违规的言论。<br />
+			所有文章未经授权禁止转载、摘编、复制或建立镜像，如有违反，追究法律责任。转载申请：<a href="">zjianf2014@outlook.com</a>。<br />
+			Copyright © acproject.xyz All Rights Reserved. 备案号：粤ICP备19019790号-1。<br />
+			Design by SaKazaKi
+		</div>
+	</footer>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"
+		th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" src="../../js/jquery.ias.js"
+		th:src="@{/js/jquery.ias.js}"></script>
+	<script type="text/javascript" src="../../js/style.js"
+		th:src="@{/js/style.js}"></script>
+</body>
+</html>

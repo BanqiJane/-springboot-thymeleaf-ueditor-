@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404错误！很抱歉，您要找的页面不存在</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" th:href="@{/css/style.css}"/>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css" href="../../css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+<link rel="stylesheet" type="text/css" href="../../css/atelier-plateau-dark.css" th:href="@{/css/atelier-plateau-dark.css}">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap-grid.min.css" th:href="@{/css/bootstrap-grid.min.css}">
+<link rel="apple-touch-icon-precomposed" href="../../images/headlogo.png" th:href="@{/images/headlogo.png}">
+<link rel="shortcut icon" href="../../images/headlogo.png" th:href="@{/images/headlogo.png}">
+<script type="text/javascript" src="../../js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../../js/jquery.ias.js" th:src="@{/js/jquery.ias.js}"></script>
+<script type="text/javascript" src="../../js/style.js" th:src="@{/js/style.js}"></script>
+<script type="text/javascript" src="../../js/highlight.pack.js" th:src="@{/js/highlight.pack.js}"></script>
+<script type="text/javascript" src="../../js/jquery.lazyload.min.js" th:src="@{/js/jquery.lazyload.min.js}"></script>
+<script type="text/javascript" src="../../js/jquery.mousewheel-3.0.6.pack.js" th:src="@{/js/jquery.mousewheel-3.0.6.pack.js}"></script>
+<title>test</title>
+<!--[if gte IE 9]>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script>window.location.href='upgrade-browser.html';</script>
+<![endif]-->
+<style type="text/css">
+.panel{
+	padding:80px 20px 0px;
+	min-height:500px;
+	cursor:default;
+}
+.text-center {
+	margin:0 auto;
+    text-align: center;
+	border-radius:10px;
+	max-width:900px;
+	-moz-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+	-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+	box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+	
+}
+.float-left {
+    float: left !important;
+}
+.float-right {
+    float: right !important;
+}
+img {
+    border: 0;
+    vertical-align: bottom;
+}
+h2 {
+    padding-top: 20px;
+	font-size: 20px;
+}
+.padding-big {
+    padding: 20px;
+}
+.alert {
+    border-radius: 5px;
+    padding: 15px;
+    border: solid 1px #ddd;
+    background-color: #f5f5f5;
+}
+</style>
+</head>
+
+<body class="user-select">
+<header class="header">
+<div class="head">
+<div class="head-section box">
+<div class="head-logo">
+<h1 class="logo">
+<a href="../" title="Dico'blog" draggable="false">
+<img src="../images/logo.png" alt draggable="false">
+</a>
+</h1>
+</div>
+<span class="logo-mobile">
+Dico
+</span>
+<div class="search input-group">
+    <form action="../search" class="search-form" method="GET">
+        <input type="text" name="title" class="search-input" id="search-input" data-toggle="dropdown" autocomplete="off" placeholder="搜索">
+		<button type="submit" class="search-btn"></button>
+    </form> 
+<ul id="search-down" class="dropdown-menu dropdown-width" role="menu" aria-labelledby="dropdownMenu1">
+</ul>
+</div>
+<span class="right"></span>
+</div>
+<div class="head-nav box">
+<div class="head-nav-left">
+	<!-- 分类导航 等级2加一 -->
+<ul>
+  <li class="mainlevel"><a href="../" class="top_a">首页</a> </li>
+  <li class="mainlevel somes" th:if="${bcList}?exists" th:each="bcList:${bcList}"><a th:href="@{'../category/'+${bcList.id}}" class="top_a" th:text="${bcList.value}"></a>
+    <ul>
+      <li th:if="${scList}?exists" th:each="scList:${scList}"><a th:if="${bcList.id eq scList.bcid}" th:href="@{'../category/'+${scList.bcid}(scid=${scList.id})}" th:text="${scList.value}"></a></li>
+    </ul>
+  </li>
+ </ul>
+</div>
+</div>
+<div class="head-nav-fitter"></div>
+<div class="head-nav-fitter-bg"></div>
+</div>
+</header>
+<!-- 分级导航的数据源可以做 1级 -->
+<div class="menu">
+    <li><a href="../">首页</a></li>
+    <li th:if="${bcList}?exists" th:each="bcList:${bcList}"><a th:href="@{'../category/'+${bcList.id}}" class="top_a" th:text="${bcList.value}"></a></li>
+</div>
+<section class="container">
+  <div class="panel">
+    <div class="text-center">
+      <h2 style="color: red;"><stong>404错误！很抱歉，您要找的页面不存在</stong></h2>
+      <div>
+	 <div class="alert" style="margin: 0 auto;"> 卧槽！页面不见了</div>
+	<div style="margin: 0 auto;"><img src="../images/404notfound.gif"></div>
+         
+        <div class="float-right"></div>
+      </div>
+      <div class="padding-big"> <a href="/" class="btn btn-primary">返回首页</a></div>
+    </div>
+  </div>
+</section>
+<div class="fed-goto-info clearfix">
+	<a class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-share" href="javascript:;"></a>
+	<a class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-expand" href="javascript:;"></a>
+	<a class="fed-visible fed-text-center fed-back-whits fed-icon-font fed-fun-top" href="javascript:;" title="返回顶部" style="display: none;"></a>
+</div>
+<footer class="footer">
+<div class="footer-nav">
+	本站仅限于分享交流有用的技术与经验，禁止发布任何违规的言论。<br/>
+	所有文章未经授权禁止转载、摘编、复制或建立镜像，如有违反，追究法律责任。转载申请：<a href="">zjianf2014@outlook.com</a>。<br/>
+	Copyright © acproject.xyz All Rights Reserved. 备案号：粤ICP备19019790号-1。<br/>
+	Design by SaKazaKi
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<config
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+    <!--指定缓存目录-->
+    <!-- 生产环境 -->
+<!--    <persistence directory="/root/internet/ehcache-data"/>-->
+    <!-- 测试环境 -->
+     <persistence directory="E:/banqi/blogs/ehcache-data"/>
+    <!--缓存模板-->
+    <cache-template name="defaultss">
+
+        <expiry>
+            <ttl unit="seconds">600</ttl>
+        </expiry>
+        <resources>
+            <!--堆内内存可以放2000个条目，超出部分堆外100MB-->
+            <heap unit="entries">20</heap>
+            <offheap unit="MB">10</offheap>
+        </resources>
+    </cache-template>
+
+    <!--实际的缓存区间，继承了default缓存模板,这里配置名称 完全使用模板默认-->
+    <!-- 缓存最新5篇文章   缓存一天 -->
+    <cache alias="newArticles" uses-template="defaultss">
+     <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+ <!--    缓存首页排行榜中的文章评论数排行榜   缓存一天 -->
+    <cache alias="indexCommentNum" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+    <!-- 缓存首页排行榜中的文章访问量排行榜   缓存一天 -->
+    <cache alias="indexArticlePv" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+<!--     缓存首页排行榜中的文章点赞排行榜   缓存一天 -->
+    <cache alias="indexArticlePraise" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+<!--     缓存大类别   缓存一天 -->
+    <cache alias="bcList" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+<!--     缓存小类别  缓存一天 -->
+    <cache alias="scList" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">24</ttl>
+        </expiry>
+    </cache>
+   <!--  缓存公告  缓存4小时 -->
+    <cache alias="indexAnnounce" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">4</ttl>
+        </expiry>
+    </cache>
+    <!-- 缓存公告ID  缓存4小时 -->
+    <cache alias="indexAnnounceByMaxId" uses-template="defaultss">
+    <expiry>
+            <ttl unit="hours">4</ttl>
+        </expiry>
+    </cache>
+
+    <!--下面两个继承了default缓存模板，但覆盖了缓存的过期时间-->
+<!-- 1 -->
+<!--     <cache alias="authority" uses-template="default">
+        <expiry>
+            <ttl unit="seconds">1</ttl>
+        </expiry>
+    </cache> -->
+<!-- 2 -->
+<!--     <cache alias="lapp_service" uses-template="default">
+        <expiry>
+            <ttl unit="seconds">24</ttl>
+        </expiry>
+    </cache> -->
+</config>
